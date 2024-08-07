@@ -12,7 +12,10 @@ Welcome to the Ant.js framework documentation! This guide will help you get star
 7. [State Management](#state-management)
 8. [Routing](#routing)
 9. [Styling](#styling)
-10. [Best Practices](#best-practices)
+10. [Fetching Data](#fetching-data)
+11. [Working with Child Components](#working-with-child-components)
+12. [Utility Functions](#utility-functions)
+13. [Best Practices](#best-practices)
 
 ## 1. Introduction 🚀
 
@@ -307,7 +310,86 @@ import "./MyComponent.css";
 </script>
 ```
 
-## 10. Best Practices 🏆
+## 10. Fetching Data 🌐
+
+Ant.js provides a built-in `antFetch` utility for making HTTP requests. Here's how to use it:
+
+```html
+<script>
+import antFetch from './antFetch.js';
+
+onMounted = async () => {
+  try {
+    const { data } = await antFetch.get('https://api.example.com/todos');
+    // Process the fetched data
+    console.log(data);
+  } catch (error) {
+    console.error('Error fetching todos:', error);
+  }
+};
+</script>
+```
+
+## 11. Working with Child Components 👨‍👧‍👦
+
+Ant.js supports nested components. Here's an example of a parent component using a child component:
+
+```html
+<!-- Parent.ant -->
+<template>
+  <div class="parent-component">
+    <h1>{{ title }}</h1>
+    <Child :title="childTitle" :message="childMessage"></Child>
+  </div>
+</template>
+
+<script>
+import Child from './Child.ant';
+
+data = {
+  title: 'Parent Component',
+  childTitle: 'Child Component',
+  childMessage: 'Hello from parent!'
+};
+</script>
+
+<!-- Child.ant -->
+<template>
+  <div class="child-component">
+    <h2>{{ title }}</h2>
+    <p>{{ message }}</p>
+  </div>
+</template>
+
+<script>
+props = {
+  title: String,
+  message: String
+};
+</script>
+```
+
+## 12. Utility Functions 🛠️
+
+You can create utility functions to use across your application. Here's an example:
+
+```javascript
+// utils.js
+export function formatDate(date) {
+  return new Date(date).toLocaleDateString();
+}
+
+// Using the utility function in a component
+<script>
+import { formatDate } from './utils.js';
+
+data = {
+  currentDate: formatDate(new Date())
+};
+</script>
+```
+
+## 13. Best Practices 🏆
 
 1. **Keep components small and focused**: Each component should have a single responsibility.
 2. **Use props for parent-child communication**: Pass data down to child components using props.
@@ -319,5 +401,10 @@ import "./MyComponent.css";
 8. **Handle errors gracefully**: Implement error boundaries and provide meaningful error messages to users.
 9. **Write clean and readable code**: Use proper indentation, meaningful variable names, and add comments where necessary.
 10. **Test your components**: Write unit tests for your components to ensure they behave as expected.
+11. **Use antFetch for API calls**: Utilize the built-in `antFetch` utility for making HTTP requests.
+12. **Modularize your code**: Break your application into reusable components and utility functions.
+13. **Implement proper routing**: Use the built-in router to create a smooth navigation experience.
+14. **Optimize asset loading**: Use lazy loading for components and assets when appropriate.
+15. **Follow security best practices**: Sanitize user inputs, use HTTPS, and implement proper authentication and authorization.
 
 By following these guidelines and exploring the features of Ant.js, you'll be well on your way to building robust and efficient web applications. Happy coding with Ant.js! 🐜✨
