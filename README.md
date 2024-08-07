@@ -1,248 +1,323 @@
-# 🚀 AntFramework Documentation
+# 🐜 Ant.js Framework Documentation
 
-Welcome to the AntFramework documentation! This guide will help you create powerful web applications using components, state management, and routing. Let's dive in! 🏊‍♂️
+Welcome to the Ant.js framework documentation! This guide will help you get started with building powerful and reactive web applications using Ant.js. Let's explore the features and concepts that make Ant.js a great choice for your next project.
 
-## 📦 Creating Components
+## Table of Contents
+1. [Introduction](#introduction)
+2. [Creating Components](#creating-components)
+3. [Component Structure](#component-structure)
+4. [Data Binding and Reactivity](#data-binding-and-reactivity)
+5. [Event Handling](#event-handling)
+6. [Lifecycle Hooks](#lifecycle-hooks)
+7. [State Management](#state-management)
+8. [Routing](#routing)
+9. [Styling](#styling)
+10. [Best Practices](#best-practices)
 
-Components are the building blocks of your application. Here's how to create one:
+## 1. Introduction 🚀
+
+Ant.js is a lightweight and intuitive framework for building reactive web applications. It provides a component-based architecture, state management, and routing out of the box, making it easy to create dynamic and interactive user interfaces.
+
+## 2. Creating Components 🏗️
+
+In Ant.js, components are the building blocks of your application. Each component is defined in a `.ant` file, which contains the template, script, and style for that component.
+
+To create a new component, create a file with the `.ant` extension, for example, `MyComponent.ant`.
+
+## 3. Component Structure 📐
+
+A typical Ant.js component consists of three main sections: template, script, and style. Here's the basic structure:
 
 ```html
-<!-- MyComponent.ant -->
 <template>
-  <div>
-    <h1>{{ title }}</h1>
-    <p>{{ message }}</p>
-    <button @click="incrementCount">Count: {{ count }}</button>
-  </div>
+  <!-- Your HTML template goes here -->
 </template>
 
 <script>
-  data = {
-    title: "My Component",
-    message: "Hello, AntFramework!",
-    count: 0
-  };
-
-  methods = {
-    incrementCount() {
-      this.data.count++;
-    }
-  };
-
-  onMounted() {
-    console.log("Component mounted!");
-  }
+  // Your component logic goes here
 </script>
 
 <style>
-  h1 {
-    color: #333;
-  }
-  button {
-    background-color: #4caf50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-  }
+  /* Your component-specific styles go here */
 </style>
 ```
 
-### 🔑 Key Features:
+Let's break down each section:
 
-- `<template>`: Contains the HTML structure of your component
-- `<script>`: Defines component logic, data, and methods
-- `<style>`: Adds component-specific styles
+### Template 🖼️
 
-## 🗃️ State Management
-
-AntFramework provides a powerful state management system. Here's how to use it:
-
-1. Define a store:
-
-```javascript
-// userStore.js
-import { defineStore } from "./stateManagement.js";
-
-export const useUserStore = defineStore("user", {
-  state: {
-    username: "",
-    isLoggedIn: false,
-  },
-  actions: {
-    login(username) {
-      this.state.username = username;
-      this.state.isLoggedIn = true;
-    },
-    logout() {
-      this.state.username = "";
-      this.state.isLoggedIn = false;
-    },
-  },
-});
-```
-
-2. Use the store in a component:
+The template section contains your HTML markup. You can use directives and expressions to create dynamic content:
 
 ```html
-<!-- Login.ant -->
 <template>
-  <div>
-    <input v-model="username" placeholder="Username" />
-    <button @click="login">Login</button>
+  <div class="greeting">
+    <h1>{{ title }}</h1>
+    <p>Count: {{ count }}</p>
+    <button @click="increment">Increment</button>
   </div>
 </template>
+```
 
+### Script 📜
+
+The script section defines your component's logic, including data, methods, and lifecycle hooks:
+
+```html
 <script>
-  import { useUserStore } from "./userStore.js";
+data = {
+  title: 'Welcome to Ant.js',
+  count: 0
+};
 
-  const userStore = useUserStore();
+methods = {
+  increment() {
+    data.count++;
+  }
+};
 
-  data = {
-    username: "",
-  };
-
-  methods = {
-    login() {
-      userStore.actions.login(this.data.username);
-      this.navigate("/dashboard");
-    },
-  };
+onMounted = () => {
+  console.log("Component mounted");
+};
 </script>
 ```
 
-## 🛣️ Routing
+### Style 🎨
 
-AntFramework includes a built-in router. Here's how to set it up:
+The style section contains component-specific CSS:
+
+```html
+<style>
+.greeting {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+</style>
+```
+
+## 4. Data Binding and Reactivity ⚡
+
+Ant.js provides reactive data binding out of the box. You can use double curly braces `{{ }}` to display data in your template:
+
+```html
+<template>
+  <p>{{ message }}</p>
+</template>
+
+<script>
+data = {
+  message: 'Hello, Ant.js!'
+};
+</script>
+```
+
+## 5. Event Handling 🖱️
+
+Handling events in Ant.js is straightforward. Use the `@` symbol followed by the event name to bind methods to events:
+
+```html
+<template>
+  <button @click="handleClick">Click me</button>
+</template>
+
+<script>
+methods = {
+  handleClick() {
+    console.log('Button clicked!');
+  }
+};
+</script>
+```
+
+## 6. Lifecycle Hooks 🔄
+
+Ant.js provides lifecycle hooks to perform actions at specific stages of a component's lifecycle:
+
+```html
+<script>
+onMounted = () => {
+  console.log('Component mounted');
+};
+
+onUpdated = () => {
+  console.log('Component updated');
+};
+
+onUnmounted = () => {
+  console.log('Component unmounted');
+};
+</script>
+```
+
+## 7. State Management 📊
+
+Ant.js includes a built-in state management system. You can define and use stores to manage application-wide state:
+
+```javascript
+// todoStore.js
+import { defineStore } from './antFramework.js';
+
+export const todoStore = defineStore('todo', {
+  state: {
+    todos: []
+  },
+  actions: {
+    addTodo(text) {
+      this.todos.push({ id: Date.now(), text, completed: false });
+    },
+    toggleTodo(id) {
+      const todo = this.todos.find(t => t.id === id);
+      if (todo) {
+        todo.completed = !todo.completed;
+      }
+    },
+    removeTodo(id) {
+      this.todos = this.todos.filter(t => t.id !== id);
+    }
+  }
+});
+
+// In your component
+<script>
+import { todoStore } from './todoStore.js';
+
+const { state: todoState, actions: todoActions } = useStore('todo');
+
+data = {
+  newTodo: '',
+  get todos() {
+    return todoState.todos;
+  }
+};
+
+methods = {
+  addTodo() {
+    if (data.newTodo.trim()) {
+      todoActions.addTodo(data.newTodo.trim());
+      data.newTodo = '';
+    }
+  },
+  toggleTodo(id) {
+    todoActions.toggleTodo(id);
+  },
+  removeTodo(id) {
+    todoActions.removeTodo(id);
+  }
+};
+</script>
+```
+
+## 8. Routing 🛣️
+
+Ant.js comes with a built-in router for managing navigation in your application. Here's how to set up and use the router:
 
 ```javascript
 // main.js
-import { createComponent } from "./antFramework.js";
-import router from "./router.js";
+import { createComponent, router } from "./antFramework.js";
 
 async function initializeApp() {
-  router.addRoute("/", async () => {
-    const homeContent = await fetch("./Home.ant").then((r) => r.text());
-    return await createComponent(homeContent);
-  });
+  try {
+    // Configure router
+    router.mode = 'browser'; // or 'hash'
+    router.root = '/';
+    router.notFoundComponent = "./NotFound.ant";
 
-  router.addRoute("/about", async () => {
-    const aboutContent = await fetch("./About.ant").then((r) => r.text());
-    return await createComponent(aboutContent);
-  });
+    // Set loading indicator
+    router.setLoadingIndicator("./LoadingIndicator.ant");
 
-  router.setViewElement("#app");
-  router.handleRouteChange();
+    // Define routes
+    router.addRoute("/", "./Home.ant", { loadingMessage: "Loading Home page..." });
+    router.addRoute("/about", "./About.ant", { showLoading: false });
+    router.addRoute("/contact", "./Contact.ant");
+
+    // Set the view element where components will be rendered
+    router.setViewElement("#app");
+
+    // Add a middleware example
+    router.use(async (context) => {
+      console.log("Route changed:", context.getPathAndQuery().path);
+      // You can perform checks here and return false to cancel navigation
+      return true;
+    });
+
+    // Start the router
+    await router.handleRouteChange();
+
+    // Make router globally available if needed
+    window.router = router;
+  } catch (error) {
+    console.error("Failed to initialize app:", error);
+  }
 }
 
 initializeApp();
 ```
 
-To create links in your components:
+To use the router in your components:
 
 ```html
-<a href="/" router-link>Home</a> <a href="/about" router-link>About</a>
-```
+<template>
+  <nav>
+    <a router-link href="/">Home</a>
+    <a router-link href="/about">About</a>
+    <a router-link href="/contact">Contact</a>
+  </nav>
+</template>
 
-To navigate programmatically:
-
-```javascript
+<script>
 methods = {
   goToAbout() {
-    this.navigate("/about");
-  },
+    this.navigate('/about');
+  }
 };
-```
-
-## 📥 Input Handling
-
-AntFramework makes it easy to handle user input:
-
-```html
-<template>
-  <div>
-    <input v-model="name" placeholder="Enter your name" />
-    <button @click="greet">Greet</button>
-    <p>{{ greeting }}</p>
-  </div>
-</template>
-
-<script>
-  data = {
-    name: "",
-    greeting: "",
-  };
-
-  methods = {
-    greet() {
-      this.data.greeting = `Hello, ${this.data.name}!`;
-    },
-  };
 </script>
 ```
 
-## 🔄 Lifecycle Hooks
+## 9. Styling 🎭
 
-AntFramework provides lifecycle hooks for better control:
+Ant.js supports both inline styles and separate CSS files:
 
-```javascript
-onMounted() {
-  console.log("Component is mounted!");
-}
-
-onUpdated() {
-  console.log("Component is updated!");
-}
-
-onUnmounted() {
-  console.log("Component is unmounted!");
-}
-```
-
-## 🎨 Directives
-
-AntFramework includes several useful directives:
-
-- `v-if`: Conditional rendering
-- `v-for`: List rendering
-- `v-model`: Two-way data binding
-- `v-bind` or `:`: Attribute binding
-- `v-on` or `@`: Event handling
-
-Example:
+### Inline Styles
 
 ```html
-<template>
-  <div>
-    <ul>
-      <li v-for="item in items" :key="item.id">
-        <span :class="{ 'completed': item.done }">{{ item.text }}</span>
-        <button @click="toggleItem(item.id)">Toggle</button>
-      </li>
-    </ul>
-  </div>
-</template>
+<style>
+.my-component {
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+</style>
+```
 
+### External CSS
+
+You can import external CSS files in your component's script section:
+
+```html
 <script>
-  data = {
-    items: [
-      { id: 1, text: "Learn AntFramework", done: false },
-      { id: 2, text: "Build an app", done: false },
-    ],
-  };
+import "./MyComponent.css";
 
-  methods = {
-    toggleItem(id) {
-      const item = this.data.items.find((i) => i.id === id);
-      if (item) item.done = !item.done;
-    },
-  };
+// Rest of your component logic
 </script>
 ```
 
-## 🚀 Conclusion
+## 10. Best Practices 🏆
 
-AntFramework provides a powerful set of tools for building modern web applications. With components, state management, routing, and more, you can create robust and scalable apps with ease. Happy coding! 🎉
+1. **Keep components small and focused**: Each component should have a single responsibility.
+2. **Use props for parent-child communication**: Pass data down to child components using props.
+3. **Leverage the built-in state management**: Use stores for managing application-wide state.
+4. **Follow a consistent naming convention**: Use descriptive names for components, methods, and variables.
+5. **Separate concerns**: Keep template, script, and style sections organized and focused on their respective responsibilities.
+6. **Use lifecycle hooks wisely**: Perform setup and cleanup operations in the appropriate lifecycle hooks.
+7. **Optimize performance**: Use computed properties and avoid unnecessary reactivity.
+8. **Handle errors gracefully**: Implement error boundaries and provide meaningful error messages to users.
+9. **Write clean and readable code**: Use proper indentation, meaningful variable names, and add comments where necessary.
+10. **Test your components**: Write unit tests for your components to ensure they behave as expected.
 
-For more advanced features and detailed API references, please check out our full documentation website.
-`
+By following these guidelines and exploring the features of Ant.js, you'll be well on your way to building robust and efficient web applications. Happy coding with Ant.js! 🐜✨
