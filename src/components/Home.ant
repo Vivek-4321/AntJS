@@ -1,0 +1,99 @@
+<template>
+  <div class="home-container">
+    <header class="header">
+      <h1 class="logo">Ant Js</h1>
+      <nav>
+        <a href="#" class="active">Home</a>
+       <a router-link href="/about">About</a>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      <section class="hero">
+        <h2 class="animated-text">Welcome to Ant Frameworkkkkk</h2>
+        <p class="animated-text-delay">A modern, lightweight framework for building elegant web applications.</p>
+        <button @click="incrementCounter" class="cta-button pulse">
+          Click me! Count: {{ counter }}
+        </button>
+      </section>
+
+      <section class="features">
+        <h3 class="animated-text">Key Features</h3>
+        <div class="feature-grid">
+          <div v-for="feature in features" class="feature-box fade-in">
+            <span class="feature-icon">{{ feature.icon }}</span>
+            <h4>{{ feature.title }}</h4>
+            <p>{{ feature.text }}</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="demo">
+        <h3 class="animated-text">Quick Demo</h3>
+        <input v-model="newTodo" placeholder="Add a new todo" class="animated-input">
+        <button @click="addTodo" class="add-todo-btn">Add Todo</button>
+        <ul class="todo-list">
+          <li v-for="todo in todos" class="todo-item slide-in" :data-todo-id="todo.id">
+            <span :class="{ 'completed': todo.completed }">{{ todo.text }}</span>
+            <div class="todo-actions">
+              <button @click="toggleTodo(todo.id)" class="toggle-btn">
+                {{ todo.completed ? '↩️' : '✅' }}
+              </button>
+              <button @click="removeTodo(todo.id)" class="remove-btn">❌</button>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2024 Ant Framework. All rights reserved.</p>
+    </footer>
+  </div>
+</template>
+
+<script>
+import { todoStore } from '../../src/store/todoStore.js';
+import "components/Home.css";
+import { formatCodeBlock } from '../../utils/utils.js';
+
+const { state: todoState, actions: todoActions } = useStore('todo');
+
+data = {
+  counter: 0,
+  newTodo: '',
+  features: [
+    { icon: '🚀', title: 'Fast', text: 'Lightning-fast performance for smooth user experiences.' },
+    { icon: '🧩', title: 'Component-based', text: 'Build complex UIs from small, reusable pieces.' },
+    { icon: '🔄', title: 'Reactive', text: 'Reactive data binding for effortless state management.' },
+    { icon: '🎨', title: 'Stylish', text: 'Easy-to-use styling system for beautiful designs.' },
+    { icon: '🛠️', title: 'Flexible', text: 'Adaptable to various project needs and scales.' },
+    { icon: '📦', title: 'Lightweight', text: 'Minimal bundle size for faster load times.' },
+  ],
+  get todos() {
+    return todoState.todos;
+  }
+};
+
+methods = {
+  incrementCounter() {
+    data.counter++;
+  },
+  addTodo() {
+    if (data.newTodo.trim()) {
+      todoActions.addTodo(data.newTodo.trim());
+      data.newTodo = '';
+    }
+  },
+  toggleTodo(todoId) {
+    todoActions.toggleTodo(todoId);
+  },
+  removeTodo(todoId) {
+    todoActions.removeTodo(todoId);
+  }
+};
+
+onMounted = () => {
+  console.log("Home component mounted");
+};
+</script>
