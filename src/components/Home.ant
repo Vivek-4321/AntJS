@@ -10,7 +10,7 @@
 
     <main class="main-content">
       <section class="hero">
-        <h2 class="animated-text">Welcome to Ant Frameworkkkkk</h2>
+        <h2 class="animated-text">Welcome to Ant Framework</h2>
         <p class="animated-text-delay">A modern, lightweight framework for building elegant web applications.</p>
         <button @click="incrementCounter" class="cta-button pulse">
           Click me! Count: {{ counter }}
@@ -77,6 +77,7 @@ data = {
 
 methods = {
   incrementCounter() {
+    throw new Error("Error occured...");
     data.counter++;
   },
   addTodo() {

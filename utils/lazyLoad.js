@@ -78,15 +78,17 @@ const Suspense = (customFallback) => createComponent(`
     </script>
   `);
   
-function lazyLoad(importFunc) {
-  return async (router) => {
-    try {
-      const module = await importFunc();
-      return module.default;
-    } catch (error) {
-      console.error('Error lazy loading component:', error);
-      throw error;
-    }
+// lazyLoad.js
+function lazyLoad(componentPath) {
+  return {
+    component: null,
+    async load() {
+      if (!this.component) {
+        const module = await import(componentPath);
+        this.component = module.default;
+      }
+      return this.component;
+    },
   };
 }
 
